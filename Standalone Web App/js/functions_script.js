@@ -11,8 +11,9 @@ Close_search();
 
 function ListAll() {
 	var data = '';
-	if (names.length > 0) {
-		for (i = 0; i < names.length; i++) {
+	if (rolls.length > 0) {
+		sorted = rolls.sort(function (a, b) {  return a - b;  });
+		for (i = 0; i < sorted.length; i++) {
 			data += '<tr>';
 			data += '<td>' + rolls[i] + '</td>';
 			data += '<td>' + names[i] + '</td>';
@@ -63,22 +64,31 @@ function Add() {
 	var name = e2.value;
 	var age = e3.value;
 	var gender = e4.value;
-	var result = Validate(roll,name,age);
-	if(result){
+	var roll_search_result = Search_roll(roll);
+	if(roll_search_result != null) {
 		el.value = '';
 		e2.value = '';
 		e3.value = '';
-		window.alert(result);
+		window.alert("Roll number already exists, please insert another roll number.");
 	}
 	else {
-		if (roll && name && age && gender) {
-			rolls.push(roll.trim())
-			names.push(name.trim());
-			ages.push(age.trim())
-			genders.push(gender.trim())
+		var result = Validate(roll,name,age);
+		if(result){
 			el.value = '';
 			e2.value = '';
 			e3.value = '';
+			window.alert(result);
+		}
+		else {
+			if (roll && name && age && gender) {
+				rolls.push(roll.trim())
+				names.push(name.trim());
+				ages.push(age.trim())
+				genders.push(gender.trim())
+				el.value = '';
+				e2.value = '';
+				e3.value = '';
+			}
 		}
 	}
 	ListAll();
@@ -104,6 +114,7 @@ function Edit(item) {
 	e2.value = names[item];
 	e3.value = ages[item];
 	e4.value = genders[item];
+	document.getElementById("edit_roll").disabled = true;
 	document.getElementById('edit').style.display = 'block';
 	self = this;
 	
@@ -115,14 +126,9 @@ function Edit(item) {
 	var gender = e4.value;
 	var result = Validate(roll,name,age);
 	if(result){
-		el.value = '';
-		e2.value = '';
-		e3.value = '';
-		Close();
 		window.alert(result);
 	}
 	else{
-		self.rolls[item] = roll
 		self.names[item] = name
 		self.ages[item] = age
 		self.genders[item] = gender
@@ -145,17 +151,9 @@ function Search(){
 	}
 }
 
-function Close() {
-	document.getElementById('edit').style.display = 'none';
-}
-
-function Close_search() {
-	document.getElementById('search_results').style.display = 'none';
-}	
-
 function Validate(roll,name,age) {
 	var result = '';
-	var letters = /^[A-Za-z]+$/;
+	var letters = /^[A-Za-z ]+$/;
 	if (isNaN(roll) || roll == ''){
 		result += "Roll number should be numeric.\n";
 	}
@@ -170,3 +168,23 @@ function Validate(roll,name,age) {
 		
 	return(result);
 }
+
+function Search_roll(roll){
+	var data = '';
+	var count = null
+	for (i = 0; i < rolls.length; i++) {
+		if(roll == rolls[i]){
+			count = i
+			}
+	}
+	return(count);
+}
+
+
+function Close() {
+	document.getElementById('edit').style.display = 'none';
+}
+
+function Close_search() {
+	document.getElementById('search_results').style.display = 'none';
+}	
