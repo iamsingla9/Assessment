@@ -1,4 +1,4 @@
-def change_dict(input_dict):
+def group_by_owners(input_dict):
     #initializing an empty dictionary
     mdict = {}
    
@@ -14,5 +14,5 @@ def change_dict(input_dict):
    
 if __name__ == '__main__':
     input_dict = {'Julius Ceaser':'Shakespear', 'Train to pakistan':'Khushwant Singh', 'Orient Express':'Agatha Cristie', 'Macbeth':'Shakespear','Delhi':'Khushwant Singh'}
-    result = change_dict(input_dict)
+    result = group_by_owners(input_dict)
     print(result)
