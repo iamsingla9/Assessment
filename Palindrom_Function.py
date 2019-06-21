@@ -7,6 +7,7 @@ def calculate_palindrome(word):
     return(1)
    
 if __name__ == '__main__':
+    print("Please provide the input")
     word = str(input().rstrip())
     result = calculate_palindrome(word.lower())
     if(result):
