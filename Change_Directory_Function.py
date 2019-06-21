@@ -39,6 +39,7 @@ def change_path(oldpath, newpath):
    
 if __name__ == '__main__':
     oldpath = "/a/b/c/d"
-    newpath = str('/../../../x/d/../../b/c/d')
-    result = change_path(oldpath, newpath)
-    print("Present working directory is : ",result)
+    print("Present working directory is %s. Please input the directory to chnage to followed by cd command." % oldpath)
+    newpath = input().split()
+    result = change_path(oldpath, newpath[1])
+    print("New working directory is : ",result)
